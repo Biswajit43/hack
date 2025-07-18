@@ -15,18 +15,8 @@ const allowedOrigins = [
     'https://facebook-remote-aptitude-test.onrender.com'
 ];
 
-app.use(cors({
-    origin: function (origin, callback) {
-        if (!origin || allowedOrigins.includes(origin)) {
-            callback(null, true);
-        } else {
-            callback(new Error('Not allowed by CORS'));
-        }
-    },
-    credentials: true,
-    methods: ['GET', 'POST', 'OPTIONS'],
-    allowedHeaders: ['Content-Type', 'Authorization']
-}));
+app.use(cors()); // allow all
+
 
 // Preflight handler (optional)
 app.options('*', cors());
