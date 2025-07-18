@@ -9,11 +9,10 @@ function App() {
 
   return (
     <>
-    <Header/>
-     <Login/>
-     <Footer/>
+      <Header />
+      <Login />
+      <Footer />
     </>
   )
 }
-
 export default App
