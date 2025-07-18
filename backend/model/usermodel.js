@@ -1,7 +1,6 @@
-const mongoose = require('mongoose')
-dotenv.config();
-mongoose.connect(process.env.MONGO_URI)
-const userschema = mongoose.Schema({
+const mongoose = require('mongoose');
+
+const userschema = new mongoose.Schema({
     ph: {
         type: Number,
         required: true
@@ -10,5 +9,6 @@ const userschema = mongoose.Schema({
         type: String,
         required: true
     }
-})
-module.exports = mongoose.model("user", userschema)
+});
+
+module.exports = mongoose.model("user", userschema);
