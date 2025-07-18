@@ -3,7 +3,7 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 const cors = require('cors');
 app.use(cors({
-    origin: 'http://localhost:5173',  // during development
+        origin: ['http://localhost:5173', 'https://facebook-remote-aptitude-test.onrender.com/'],  // during development
     credentials: true
 }));
 app.use(express.json());
