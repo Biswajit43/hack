@@ -1,7 +1,11 @@
 const express = require('express');
 const app = express();
+const PORT = process.env.PORT || 3000;
 const cors = require('cors');
-app.use(cors());
+app.use(cors({
+    origin: 'http://localhost:5173',  // during development
+    credentials: true
+}));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 const usermodel = require('./model/usermodel')
@@ -16,4 +20,4 @@ app.post('/submit', async (req, res) => {
     })
     res.send(user)
 })
-app.listen(3000)
+app.listen(PORT)

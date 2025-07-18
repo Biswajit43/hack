@@ -4,7 +4,7 @@ import './App.css'
 
 import Header from './Components/Header'
 import Footer from './Components/Footer'
-import Login from './Components/login'
+import Login from './Components/Login'
 
 function App() {
 
@@ -14,6 +14,6 @@ function App() {
       <Login />
       <Footer />
     </>
-  )
+  ) 
 }
 export default App
