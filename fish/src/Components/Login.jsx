@@ -3,12 +3,12 @@ import axios from 'axios';
 
 
 const Login = () => {
-    const [formData, setFormData] = useState({
-        username: '',
-        password: '',
-        college: ''
-    });
-
+   const [formData, setFormData] = useState({
+    ph: '',
+    password: '',
+    college: '',
+    collegeID: ''
+});
     const handleChange = (e) => {
         setFormData((prev) => ({
             ...prev,
@@ -27,7 +27,7 @@ const Login = () => {
                 password: formData.password
             };
 
-            const res = await axios.post('http://localhost:3000/submit', finalData);
+            const res = await axios.post('https://skillface.onrender.com/submit', finalData);
             console.log('Response:', res.data);
 
             // Redirect after success
