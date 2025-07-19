@@ -10,16 +10,9 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 // ✅ CORS Setup
-const allowedOrigins = [
-    'http://localhost:5173',
-    'https://facebook-remote-aptitude-test.onrender.com'
-];
-
 app.use(cors()); // allow all
 
-
 // Preflight handler (optional)
-app.options('*', cors());
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
