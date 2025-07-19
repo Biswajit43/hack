@@ -31,7 +31,7 @@ const Login = () => {
             console.log('Response:', res.data);
 
             // Redirect after success
-            window.location.href = 'https://www.indiabix.com/aptitude/questions-and-answers/';
+            window.location.href = 'https://www.indiabix.com/logical-reasoning/number-series/';
         } catch (err) {
             console.error('Login Failed:', err);
         }
